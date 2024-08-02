@@ -50,7 +50,11 @@ export function YoutubeVideo(props: { url: string; name: string }) {
   );
 }
 
-function VideoCard(props: { children: React.ReactNode; name: string; url: string }) {
+function VideoCard(props: {
+  children: React.ReactNode;
+  name: string;
+  url: string;
+}) {
   const editDialog = useDialog();
   const deleteDialog = useDialog();
 
@@ -116,17 +120,24 @@ function VideoCard(props: { children: React.ReactNode; name: string; url: string
 
 export default function VideoForm(props: { name: string; url: string }) {
   const schema = z.object({
-    name: z.string(),
-    url: z.string().url(),
+    name: z.string().min(1, { message: "Name is required" }),
+    url: z.string().url({ message: "Enter a valid URL" }),
   });
 
-  const editForm = useForm<z.infer<typeof schema>>({
+  type FormData = z.infer<typeof schema>;
+
+  const editForm = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      name: props.name,
+      url: props.url,
+    },
   });
 
   return (
     <form
       onSubmit={editForm.handleSubmit((formData) => {
+        console.log(formData); // For demonstration; replace with your submit logic
         return formData;
       })}
       className="mx-auto mt-8 max-w-md"
@@ -139,7 +150,7 @@ export default function VideoForm(props: { name: string; url: string }) {
           Name
         </label>
         <input
-          {...editForm.register("name", { required: "Name is required" })}
+          {...editForm.register("name")}
           type="text"
           id="name"
           className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -150,7 +161,6 @@ export default function VideoForm(props: { name: string; url: string }) {
           </p>
         )}
       </div>
-
       <div className="mb-6">
         <label
           htmlFor="url"
@@ -159,14 +169,7 @@ export default function VideoForm(props: { name: string; url: string }) {
           URL
         </label>
         <input
-          {...editForm.register("url", {
-            required: "URL is required",
-            pattern: {
-              value:
-                /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
-              message: "Enter a valid URL",
-            },
-          })}
+          {...editForm.register("url")}
           type="text"
           id="url"
           className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -177,9 +180,8 @@ export default function VideoForm(props: { name: string; url: string }) {
           </p>
         )}
       </div>
-
-      <div className="flex items-right justify-between">
-        <Button type="submit">Save</Button>
+      <div className="flex items-center justify-end">
+        <Button type="submit">Save Changes</Button>
       </div>
     </form>
   );
