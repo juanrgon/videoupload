@@ -67,7 +67,7 @@ export function useUpdateVideo() {
   });
 }
 
-const useDeleteVideo = () => {
+export function useDeleteVideo() {
   const queryClient = useQueryClient();
   return useMutation<string, Error, string>({
     mutationFn: async (videoId) => {
@@ -80,28 +80,4 @@ const useDeleteVideo = () => {
       await queryClient.invalidateQueries({ queryKey: ["videos"] });
     },
   });
-};
-
-// 4. Component to display and manage the list
-export function VideoList() {
-  const { data: videos, isLoading, error } = useVideos();
-  const addVideo = useAddVideo();
-  const updateVideo = useUpdateVideo();
-  const deleteVideo = useDeleteVideo();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  return (
-    <div>
-      <h2>Video List</h2>
-      {videos?.map((video) => (
-        <div key={video.id}>
-          <span>{video.name}</span> - <a href={video.url}>{video.url}</a>
-          <button onClick={() => deleteVideo.mutate(video.id)}>Delete</button>
-        </div>
-      ))}
-      {/* Add form for adding/updating videos here */}
-    </div>
-  );
 }

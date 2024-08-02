@@ -8,7 +8,7 @@ export function YoutubeVideoGrid() {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {videos.data?.map((v) => (
-        <YoutubeVideo key={v.url} url={v.url} name={v.name} />
+        <YoutubeVideo key={v.id} id={v.id} url={v.url} name={v.name} />
       ))}
     </div>
   );

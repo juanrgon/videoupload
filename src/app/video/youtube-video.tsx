@@ -30,12 +30,13 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 
 import { useDialog } from "@/components/ui/use-dialog";
+import { useDeleteVideo } from "./youtube-video-store";
 
-export function YoutubeVideo(props: { url: string; name: string }) {
+export function YoutubeVideo(props: { id: string; url: string; name: string }) {
   const embedUrl = getEmbedUrl(props.url);
 
   return (
-    <VideoCard name={props.name} url={props.url}>
+    <VideoCard id={props.id} name={props.name} url={props.url}>
       <iframe
         src={embedUrl}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -48,11 +49,13 @@ export function YoutubeVideo(props: { url: string; name: string }) {
 
 function VideoCard(props: {
   children: React.ReactNode;
+  id: string;
   name: string;
   url: string;
 }) {
   const editDialog = useDialog();
   const deleteDialog = useDialog();
+  const deleteVideo = useDeleteVideo();
 
   return (
     <Card>
@@ -104,7 +107,9 @@ function VideoCard(props: {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction>Delete</AlertDialogAction>
+              <AlertDialogAction onClick={() => deleteVideo.mutate(props.id)}>
+                Delete
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
