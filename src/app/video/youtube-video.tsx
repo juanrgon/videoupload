@@ -1,13 +1,36 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Children } from "react";
+
 export function YoutubeVideo({ url }: { url: string }) {
-    const embedUrl = getEmbedUrl(url);
+  const embedUrl = getEmbedUrl(url);
 
   return (
-    <iframe
-      src={embedUrl}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-      className="aspect-video w-full rounded-md"
-    />
+    <VideoCard>
+      <iframe
+        src={embedUrl}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="aspect-video w-full rounded-md"
+      />
+    </VideoCard>
+  );
+}
+
+function VideoCard(props: { children: React.ReactNode }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Card Title</CardTitle>
+      </CardHeader>
+      <CardContent>{props.children}</CardContent>
+    </Card>
   );
 }
 
