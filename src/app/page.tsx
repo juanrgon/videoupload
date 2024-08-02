@@ -16,12 +16,12 @@ export default async function Home() {
         </div>
 
         <YoutubeVideoGrid
-          urls={[
-            "https://www.youtube.com/watch?v=JBbliWyaygM",
-            "https://www.youtube.com/watch?v=XDpoBc8t6gE",
-            "https://www.youtube.com/watch?v=ko4IMxJW0rU",
-            "https://www.youtube.com/watch?v=mPymRFeTJa4",
-            "https://www.youtube.com/watch?v=Px9biv1pgVE",
+          videos={[
+            { name: "foo", url: "https://www.youtube.com/watch?v=JBbliWyaygM" },
+            { name: "foo", url: "https://www.youtube.com/watch?v=XDpoBc8t6gE" },
+            { name: "foo", url: "https://www.youtube.com/watch?v=ko4IMxJW0rU" },
+            { name: "foo", url: "https://www.youtube.com/watch?v=mPymRFeTJa4" },
+            { name: "foo", url: "https://www.youtube.com/watch?v=Px9biv1pgVE" },
           ]}
         />
       </main>
