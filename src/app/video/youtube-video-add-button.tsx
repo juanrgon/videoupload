@@ -24,8 +24,7 @@ export function AddVideoButton() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit</DialogTitle>
-          <DialogDescription>Add Video</DialogDescription>
+          <DialogTitle>Add Video</DialogTitle>
         </DialogHeader>
         <DialogDescription>
           <AddVideoForm onAdd={addDialog.dismiss} />
