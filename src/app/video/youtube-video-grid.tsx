@@ -1,11 +1,13 @@
+"use client";
 import { YoutubeVideo } from "./youtube-video";
+import { useVideos } from "./youtube-video-store";
 
-export function YoutubeVideoGrid(props: {
-  videos: { name: string; url: string }[];
-}) {
+export function YoutubeVideoGrid() {
+  const videos = useVideos();
+
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {props.videos.map((v) => (
+      {videos.data?.map((v) => (
         <YoutubeVideo key={v.url} url={v.url} name={v.name} />
       ))}
     </div>

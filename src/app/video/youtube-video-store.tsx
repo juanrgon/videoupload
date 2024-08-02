@@ -27,7 +27,7 @@ export function saveVideosToStorage(videos: Video[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(videos));
 }
 
-function useVideos() {
+export function useVideos() {
   return useQuery<Video[], Error>({
     queryKey: ["videos"],
     queryFn: getVideosFromStorage,

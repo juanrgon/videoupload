@@ -1,7 +1,7 @@
 import { api, HydrateClient } from "@/trpc/server";
 import { YoutubeVideoGrid } from "./video/youtube-video-grid";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
+import { AddVideoButton } from "./video/youtube-video-add-button";
 
 export default async function Home() {
   //   const hello = await api.post.hello({ text: "from tRPC" });
@@ -14,20 +14,12 @@ export default async function Home() {
         <div className="flex flex-col gap-3">
           <div className="flex w-full justify-between">
             <h1 className="text-2xl">Your videos</h1>
-            <Button>Add Video</Button>
+            <AddVideoButton />
           </div>
           <Separator />
         </div>
 
-        <YoutubeVideoGrid
-          videos={[
-            { name: "foo", url: "https://www.youtube.com/watch?v=JBbliWyaygM" },
-            { name: "foo", url: "https://www.youtube.com/watch?v=XDpoBc8t6gE" },
-            { name: "foo", url: "https://www.youtube.com/watch?v=ko4IMxJW0rU" },
-            { name: "foo", url: "https://www.youtube.com/watch?v=mPymRFeTJa4" },
-            { name: "foo", url: "https://www.youtube.com/watch?v=Px9biv1pgVE" },
-          ]}
-        />
+        <YoutubeVideoGrid />
       </main>
     </HydrateClient>
   );
