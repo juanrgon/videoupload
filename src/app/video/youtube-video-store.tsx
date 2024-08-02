@@ -50,7 +50,7 @@ export function useAddVideo() {
   });
 }
 
-export function useUpdateVideo() {
+export function useEditVideo() {
   const queryClient = useQueryClient();
   return useMutation<Video, Error, Video>({
     mutationFn: async (updatedVideo) => {

@@ -30,7 +30,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 
 import { useDialog } from "@/components/ui/use-dialog";
-import { useDeleteVideo } from "./youtube-video-store";
+import { useDeleteVideo, useEditVideo } from "./youtube-video-store";
 
 export function YoutubeVideo(props: { id: string; url: string; name: string }) {
   const embedUrl = getEmbedUrl(props.url);
@@ -90,7 +90,12 @@ function VideoCard(props: {
             <DialogHeader>
               <DialogTitle>Edit</DialogTitle>
               <DialogDescription>
-                <VideoForm name={props.name} url={props.url} />
+                <VideoForm
+                  id={props.id}
+                  name={props.name}
+                  url={props.url}
+                  onEdit={editDialog.dismiss}
+                />
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
@@ -119,13 +124,19 @@ function VideoCard(props: {
   );
 }
 
-export default function VideoForm(props: { name: string; url: string }) {
+export default function VideoForm(props: {
+  id: string;
+  name: string;
+  url: string;
+  onEdit: () => void;
+}) {
   const schema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
     url: z.string().url({ message: "Enter a valid URL" }),
   });
 
   type FormData = z.infer<typeof schema>;
+  const editVideo = useEditVideo();
 
   const editForm = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -138,8 +149,15 @@ export default function VideoForm(props: { name: string; url: string }) {
   return (
     <form
       onSubmit={editForm.handleSubmit((formData) => {
-        console.log(formData); // For demonstration; replace with your submit logic
         editForm.reset();
+
+        props.onEdit();
+
+        editVideo.mutate({
+          id: props.id,
+          ...formData,
+        });
+
         return formData;
       })}
       className="mx-auto mt-8 max-w-md"
