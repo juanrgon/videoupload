@@ -18,6 +18,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { useDialog } from "@/components/ui/use-dialog";
 
 export function YoutubeVideo(props: { url: string; name: string }) {
@@ -37,6 +49,7 @@ export function YoutubeVideo(props: { url: string; name: string }) {
 
 function VideoCard(props: { children: React.ReactNode; name: string }) {
   const editDialog = useDialog();
+  const deleteDialog = useDialog();
 
   return (
     <Card>
@@ -57,12 +70,16 @@ function VideoCard(props: { children: React.ReactNode; name: string }) {
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
+            <DropdownMenuItem
+              className="text-red-500"
+              onClick={deleteDialog.trigger}
+            >
+              Delete
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
         <Dialog {...editDialog.props}>
-          <DialogTrigger>Open</DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -73,6 +90,22 @@ function VideoCard(props: { children: React.ReactNode; name: string }) {
             </DialogHeader>
           </DialogContent>
         </Dialog>
+
+        <AlertDialog {...deleteDialog.props}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </CardHeader>
       <CardContent>{props.children}</CardContent>
     </Card>
