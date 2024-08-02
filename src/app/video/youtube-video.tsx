@@ -12,7 +12,7 @@ export function YoutubeVideo({ url }: { url: string }) {
       src={embedUrl}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
-      className="aspect-video rounded-md"
+      className="aspect-video rounded-md w-full"
     />
   );
 }
