@@ -29,6 +29,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
 
 import { useDialog } from "@/components/ui/use-dialog";
 
@@ -36,7 +39,7 @@ export function YoutubeVideo(props: { url: string; name: string }) {
   const embedUrl = getEmbedUrl(props.url);
 
   return (
-    <VideoCard name={props.name}>
+    <VideoCard name={props.name} url={props.url}>
       <iframe
         src={embedUrl}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -47,7 +50,7 @@ export function YoutubeVideo(props: { url: string; name: string }) {
   );
 }
 
-function VideoCard(props: { children: React.ReactNode; name: string }) {
+function VideoCard(props: { children: React.ReactNode; name: string; url: string }) {
   const editDialog = useDialog();
   const deleteDialog = useDialog();
 
@@ -71,7 +74,7 @@ function VideoCard(props: { children: React.ReactNode; name: string }) {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className="text-red-500"
+              className="text-red-500 focus:text-red-500"
               onClick={deleteDialog.trigger}
             >
               Delete
@@ -82,10 +85,9 @@ function VideoCard(props: { children: React.ReactNode; name: string }) {
         <Dialog {...editDialog.props}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogTitle>Edit</DialogTitle>
               <DialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                <VideoForm name={props.name} url={props.url} />
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
@@ -96,19 +98,90 @@ function VideoCard(props: { children: React.ReactNode; name: string }) {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                This video will be permanently deleted. This action cannot be
+                undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction>Continue</AlertDialogAction>
+              <AlertDialogAction>Delete</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
       </CardHeader>
       <CardContent>{props.children}</CardContent>
     </Card>
+  );
+}
+
+export default function VideoForm(props: { name: string; url: string }) {
+  const schema = z.object({
+    name: z.string(),
+    url: z.string().url(),
+  });
+
+  const editForm = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+  });
+
+  return (
+    <form
+      onSubmit={editForm.handleSubmit((formData) => {
+        return formData;
+      })}
+      className="mx-auto mt-8 max-w-md"
+    >
+      <div className="mb-4">
+        <label
+          htmlFor="name"
+          className="mb-2 block text-sm font-bold text-gray-700"
+        >
+          Name
+        </label>
+        <input
+          {...editForm.register("name", { required: "Name is required" })}
+          type="text"
+          id="name"
+          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        />
+        {editForm.formState.errors.name && (
+          <p className="text-xs italic text-red-500">
+            {editForm.formState.errors.name.message}
+          </p>
+        )}
+      </div>
+
+      <div className="mb-6">
+        <label
+          htmlFor="url"
+          className="mb-2 block text-sm font-bold text-gray-700"
+        >
+          URL
+        </label>
+        <input
+          {...editForm.register("url", {
+            required: "URL is required",
+            pattern: {
+              value:
+                /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
+              message: "Enter a valid URL",
+            },
+          })}
+          type="text"
+          id="url"
+          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        />
+        {editForm.formState.errors.url && (
+          <p className="text-xs italic text-red-500">
+            {editForm.formState.errors.url.message}
+          </p>
+        )}
+      </div>
+
+      <div className="flex items-right justify-between">
+        <Button type="submit">Save</Button>
+      </div>
+    </form>
   );
 }
 
