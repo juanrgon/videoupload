@@ -1,13 +1,9 @@
-import { api, HydrateClient } from "@/trpc/server";
+import { HydrateClient } from "@/trpc/server";
 import { YoutubeVideoGrid } from "./video/youtube-video-grid";
 import { Separator } from "@/components/ui/separator";
 import { AddVideoButton } from "./video/youtube-video-add-button";
 
 export default async function Home() {
-  //   const hello = await api.post.hello({ text: "from tRPC" });
-
-  void api.post.getLatest.prefetch();
-
   return (
     <HydrateClient>
       <main className="flex min-h-screen flex-col gap-8 p-8">
