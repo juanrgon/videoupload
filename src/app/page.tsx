@@ -17,11 +17,11 @@ export default async function Home() {
 
         <YoutubeVideoGrid
           urls={[
-            "https://www.youtube.com/watch?v=JBbliWyaygM&list=RDWm7JF63nA8s",
-            "https://www.youtube.com/watch?v=XDpoBc8t6gE&list=RDWm7JF63nA8s&index=8",
+            "https://www.youtube.com/watch?v=JBbliWyaygM",
+            "https://www.youtube.com/watch?v=XDpoBc8t6gE",
             "https://www.youtube.com/watch?v=ko4IMxJW0rU",
             "https://www.youtube.com/watch?v=mPymRFeTJa4",
-            "https://www.youtube.com/watch?v=Px9biv1pgVE&list=RDPx9biv1pgVE&start_radio=1",
+            "https://www.youtube.com/watch?v=Px9biv1pgVE",
           ]}
         />
       </main>
