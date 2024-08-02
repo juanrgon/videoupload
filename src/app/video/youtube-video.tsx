@@ -174,6 +174,7 @@ export default function EditVideoForm(props: {
           type="text"
           id="name"
           className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+          data-1p-ignore
         />
         {editForm.formState.errors.name && (
           <p className="text-xs italic text-red-500">
@@ -193,6 +194,7 @@ export default function EditVideoForm(props: {
           type="text"
           id="url"
           className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+          data-1p-ignore
         />
         {editForm.formState.errors.url && (
           <p className="text-xs italic text-red-500">

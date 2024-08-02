@@ -72,6 +72,7 @@ export default function AddVideoForm(props: { onAdd: () => void }) {
           type="text"
           id="name"
           className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+          data-1p-ignore
         />
         {addForm.formState.errors.name && (
           <p className="text-xs italic text-red-500">
@@ -91,6 +92,7 @@ export default function AddVideoForm(props: { onAdd: () => void }) {
           type="text"
           id="url"
           className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+          data-1p-ignore
         />
         {addForm.formState.errors.url && (
           <p className="text-xs italic text-red-500">
