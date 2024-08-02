@@ -8,15 +8,12 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   AlertDialog,
@@ -27,7 +24,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -138,6 +134,7 @@ export default function VideoForm(props: { name: string; url: string }) {
     <form
       onSubmit={editForm.handleSubmit((formData) => {
         console.log(formData); // For demonstration; replace with your submit logic
+        editForm.reset();
         return formData;
       })}
       className="mx-auto mt-8 max-w-md"
