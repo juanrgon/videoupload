@@ -90,7 +90,7 @@ function VideoCard(props: {
             <DialogHeader>
               <DialogTitle>Edit</DialogTitle>
               <DialogDescription>
-                <VideoForm
+                <EditVideoForm
                   id={props.id}
                   name={props.name}
                   url={props.url}
@@ -124,7 +124,7 @@ function VideoCard(props: {
   );
 }
 
-export default function VideoForm(props: {
+export default function EditVideoForm(props: {
   id: string;
   name: string;
   url: string;
