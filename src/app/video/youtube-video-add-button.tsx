@@ -22,7 +22,7 @@ export function AddVideoButton() {
       <DialogTrigger asChild>
         <Button>Add Video</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="w-[90%]">
         <DialogHeader>
           <DialogTitle>Add Video</DialogTitle>
         </DialogHeader>
